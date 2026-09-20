@@ -52,7 +52,7 @@ class SupabaseRestApi(private val client: SupabaseClient) {
                 put("parent_id", parentId)
                 put("parent_user_id", parentId)
                 put("pairing_code", pairingCode)
-                put("status", "waiting")
+                put("status", "pending")
             }
 
             val extraHeaders = mapOf("Prefer" to "return=representation")
@@ -66,7 +66,7 @@ class SupabaseRestApi(private val client: SupabaseClient) {
                     put("id", id)
                     put("parent_id", parentId)
                     put("pairing_code", pairingCode)
-                    put("status", "waiting")
+                    put("status", "pending")
                 }
                 val fallbackReq = client.buildRequest(url = url, method = "POST", bodyJson = fallbackJson.toString(), token = token, extraHeaders = extraHeaders)
                 val fallbackResp = client.okHttpClient.newCall(fallbackReq).execute()
@@ -376,7 +376,7 @@ class SupabaseRestApi(private val client: SupabaseClient) {
             val code = item.optString("pairing_code", "")
             val childDeviceId = item.optString("child_device_id", item.optString("device_id", "")).takeIf { it.isNotBlank() }
             val childName = item.optString("child_name", item.optString("name", "")).takeIf { it.isNotBlank() }
-            val status = item.optString("status", "waiting")
+            val status = item.optString("status", "pending")
             val createdAt = item.optString("created_at", "")
             val pairedAt = item.optString("paired_at", "").takeIf { it.isNotBlank() }
             list.add(Pairing(id, parentId, code, childDeviceId, childName, status, createdAt, pairedAt))

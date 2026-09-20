@@ -6,7 +6,7 @@ data class Pairing(
     val pairingCode: String,
     val childDeviceId: String? = null,
     val childName: String? = null,
-    val status: String = "waiting", // "waiting", "paired", "revoked"
+    val status: String = "pending", // "waiting", "paired", "revoked"
     val createdAt: String = "",
     val pairedAt: String? = null
 ) {

@@ -23,7 +23,7 @@ class PairingRepository(
         val parentId = authRepository.currentUserId ?: return@withContext Result.failure(Exception("Not authenticated"))
         val token = authRepository.currentToken ?: return@withContext Result.failure(Exception("No auth token"))
 
-        // Child App contract: permanent 8-digit numeric code; initial status must be "waiting".
+        // Child App contract: permanent 8-digit numeric code; initial status must be "pending".
         val codeNumber = 10_000_000 + random.nextInt(90_000_000)
         val pairingCode = codeNumber.toString()
         check(pairingCode.matches(Regex("\\d{8}"))) { "Generated pairing code must be exactly 8 digits" }
