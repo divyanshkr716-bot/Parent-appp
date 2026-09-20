@@ -26,18 +26,31 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
+      - name: Create debug keystore
+        run: |
+          keytool -genkeypair \
+            -v \
+            -keystore "$GITHUB_WORKSPACE/debug.keystore" \
+            -storepass android \
+            -keypass android \
+            -alias androiddebugkey \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -dname "CN=Android Debug,O=Android,C=US"
+
+      - name: Check debug keystore
+        run: |
+          ls -lh debug.keystore
+          keytool -list \
+            -keystore debug.keystore \
+            -storepass android
+
       - name: Make Gradle executable
         run: chmod +x ./gradlew
 
       - name: Build Debug APK
-        run: |
-          for i in 1 2 3 4 5; do
-            echo "Build attempt $i"
-            ./gradlew assembleDebug --no-daemon --stacktrace && exit 0
-            echo "Build failed, retrying..."
-            sleep 15
-          done
-          exit 1
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
