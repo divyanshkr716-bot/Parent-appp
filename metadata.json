@@ -1,0 +1,6 @@
+{
+  "name": "Game Centre Parent",
+  "description": "Production-ready Android Parent application for remote device management, pairing, live monitoring, and command dispatching.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
